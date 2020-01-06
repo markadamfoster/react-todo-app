@@ -26,18 +26,13 @@ function Todo({ todo, updateTodo, deleteTodo }) {
     setShowInput(false);
   };
 
-  const reset = () => {
-    setValue(todo.text);
-    setShowInput(false);
-  };
-
   return (
     <Wrapper>
       <Checkbox onClick={() => handleCheckboxClick()}>
         {todo.checked ? (
-          <CheckSquare color="#04aeaf" />
+          <CheckSquare color="#04aeaf" size={17} />
         ) : (
-          <Square color="white" />
+          <Square color="white" size={17} />
         )}
       </Checkbox>
 
@@ -46,7 +41,7 @@ function Todo({ todo, updateTodo, deleteTodo }) {
           <Input
             value={value}
             onChange={e => setValue(e.target.value)}
-            onBlur={reset}
+            onBlur={e => handleTextUpdate(e)}
           />
         </form>
       ) : (
@@ -57,7 +52,7 @@ function Todo({ todo, updateTodo, deleteTodo }) {
 
       <Actions>
         <DeleteButton onClick={() => deleteTodo(todo.id)}>
-          <Trash2 />
+          <Trash2 size={15} />
         </DeleteButton>
       </Actions>
     </Wrapper>
@@ -70,10 +65,14 @@ const Wrapper = styled.li`
   display: flex;
   align-items: center;
   color: white;
-  background: #252525;
   border-radius: 6px;
   padding: 5px;
   margin-bottom: 3px;
+  font-size: 15px;
+
+  &:hover {
+    background: #252525;
+  }
 `;
 
 const Checkbox = styled.button`
@@ -84,6 +83,7 @@ const Checkbox = styled.button`
 `;
 
 const Input = styled.input`
+  margin-left: 4px;
   border: none;
   background-color: transparent;
   color: white;

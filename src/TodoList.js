@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+
+import { SettingsContext } from "./SettingsContext";
 import Todo from "./Todo";
 
 TodoList.propTypes = {
@@ -10,16 +12,25 @@ TodoList.propTypes = {
 };
 
 function TodoList({ todos, updateTodo, deleteTodo }) {
+  const getTodos = showCompleted => {
+    if (showCompleted) return todos;
+    return todos.filter(todo => !todo.checked);
+  };
+
   return (
     <List>
-      {todos.map(todo => (
-        <Todo
-          key={todo.id}
-          todo={todo}
-          updateTodo={updateTodo}
-          deleteTodo={deleteTodo}
-        />
-      ))}
+      <SettingsContext.Consumer>
+        {context => {
+          return getTodos(context.state.showCompleted).map(todo => (
+            <Todo
+              key={todo.id}
+              todo={todo}
+              updateTodo={updateTodo}
+              deleteTodo={deleteTodo}
+            />
+          ));
+        }}
+      </SettingsContext.Consumer>
     </List>
   );
 }

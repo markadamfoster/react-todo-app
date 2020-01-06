@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { SettingsProvider } from "./SettingsContext";
+import Settings from "./Settings";
 import AddTodo from "./AddTodo";
 import { GlobalStyle } from "./GlobalStyle";
 import TodoList from "./TodoList";
@@ -28,14 +30,17 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Wrapper>
-        <AddTodo addTodo={addTodo} />
-        <TodoList
-          todos={todos}
-          updateTodo={updateTodo}
-          deleteTodo={deleteTodo}
-        />
-      </Wrapper>
+      <SettingsProvider>
+        <Wrapper>
+          <Settings />
+          <AddTodo addTodo={addTodo} />
+          <TodoList
+            todos={todos}
+            updateTodo={updateTodo}
+            deleteTodo={deleteTodo}
+          />
+        </Wrapper>
+      </SettingsProvider>
     </>
   );
 }
